@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>s5plus Avatar Example</title>
+    <script src="/dist/s5plus-Avatar.js"></script>
+
+    <script>
+      async function main() {
+        const generateS5Avatar =  s5plusAvatar.generateS5Avatar;
+
+        async function testavatar() {
+          const publicKey = "7VoNzKUx7aUsV2uDrenSgZD9ox6RxhLRcFyldIl6mmx2";
+
+          window.addEventListener("load", async function() {
+            const avatarS5 = await generateS5Avatar(publicKey, { size: 100, round: true, dark: false, draw: "circles" });
+            if (avatarS5 !== undefined) {
+              if(document.getElementById("S5Avatar") === null) {
+                let avatarImage = document.getElementById("avatar");
+                if (avatarImage) {
+                  avatarImage.src = avatarS5.avatar;
+                  avatarImage.style.width = "100px";
+                  avatarImage.style.height = "100px";
+                  avatarImage.style.visibility = "visible";
+                  avatarImage.style.borderRadius = "100%";
+                }
+                console.log('avatarS5:   ', avatarS5);
+              }
+            }
+          });
+        }
+        await testavatar();
+      }
+      main();
+    </script>
+  </head>
+  <body>
+    <br />
+    Avatar: <img id="avatar" class="avatar" name="avatar" src='#' style="visibility: hidden" />
+    <br />
+  </body>
+</html>
