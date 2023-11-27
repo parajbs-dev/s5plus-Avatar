@@ -15,6 +15,8 @@ Types of changes:
 
 ## Unreleased
 
+## [0.1.0-beta2] 27.11.2023
+
 ## [0.1.0-beta1] 26.11.2023
 
 ### Added

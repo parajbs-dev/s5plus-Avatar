@@ -20,10 +20,10 @@ export type S5AvatarOptions = {
  */
 export declare const avatarGenKey: (publicKey: string) => Promise<string>;
 /**
- * Generate an S5 avatar based on a public key and rounding option.
+ * Generates an S5 avatar based on a public key and avatar options.
  * @param publicKey - The public key as a string.
- * @param avatarOptions - An object specifying options for the avatar.
- * @returns A promise that resolves to an object containing the avatar and its image source.
+ * @param avatarOptions - Options for the avatar.
+ * @returns A promise resolving to an object with the avatar and its image source.
  */
 export declare function generateS5Avatar(publicKey: string, avatarOptions: S5AvatarOptions): Promise<{
     avatar: string;

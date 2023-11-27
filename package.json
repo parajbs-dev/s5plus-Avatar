@@ -1,6 +1,6 @@
 {
   "name": "s5plus-Avatar",
-  "version": "0.1.0-beta1",
+  "version": "0.1.0-beta2",
   "description": "S5plus Avatar Javascript",
   "types": "dist/mjs/index.d.ts",
   "module": "dist/mjs/index.js",

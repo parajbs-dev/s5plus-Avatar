@@ -11,38 +11,37 @@ export const avatarGenKey = async (publicKey) => {
     return seaPair.pub;
 };
 /**
- * Generate an S5 avatar based on a public key and rounding option.
+ * Generates an S5 avatar based on a public key and avatar options.
  * @param publicKey - The public key as a string.
- * @param avatarOptions - An object specifying options for the avatar.
- * @returns A promise that resolves to an object containing the avatar and its image source.
+ * @param avatarOptions - Options for the avatar.
+ * @returns A promise resolving to an object with the avatar and its image source.
  */
 export async function generateS5Avatar(publicKey, avatarOptions) {
     const avatarKey = await avatarGenKey(publicKey);
-    // Ensure that the `draw` property is a valid string or undefined
-    let selectedDraw;
-    if (avatarOptions.draw === 'circles' || avatarOptions.draw === 'squares') {
-        selectedDraw = avatarOptions.draw;
-    }
+    const selectedDraw = avatarOptions.draw === 'circles' || avatarOptions.draw === 'squares'
+        ? avatarOptions.draw
+        : undefined;
     const S5Avatar = await gunAvatar({
         pub: avatarKey,
         size: avatarOptions.size,
         dark: avatarOptions.dark,
         reflect: avatarOptions.reflect,
-        draw: selectedDraw, // Use the selectedDraw value here
+        draw: selectedDraw,
     });
-    const existingImage = document.getElementById("avatar");
-    const newS5AvatarImage = document.createElement("img");
-    newS5AvatarImage.id = 'S5Avatar';
-    newS5AvatarImage.src = S5Avatar;
-    if (avatarOptions.round === true) {
-        newS5AvatarImage.style.borderRadius = "100%";
-    }
-    if (existingImage) {
-        newS5AvatarImage.addEventListener('load', () => {
-            existingImage.parentNode?.insertBefore(newS5AvatarImage, existingImage);
-            existingImage.remove();
+    if (document.readyState !== 'complete')
+        await new Promise(r => setTimeout(r, 10));
+    const existingImage = document.getElementById('avatar');
+    const newS5Avatar = Object.assign(document.createElement('img'), { id: 'S5Avatar', src: S5Avatar });
+    if (avatarOptions.round)
+        newS5Avatar.style.borderRadius = '100%';
+    if (existingImage instanceof HTMLImageElement) {
+        newS5Avatar.addEventListener('load', () => {
+            const parentNode = existingImage.parentNode;
+            if (parentNode) {
+                parentNode.insertBefore(newS5Avatar, existingImage);
+                existingImage.remove();
+            }
         });
     }
-    await new Promise(r => setTimeout(r, 10));
     return { avatar: S5Avatar };
 }
